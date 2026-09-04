@@ -18,5 +18,40 @@
         "username": "burger_3423",
         "note": "frog thing.",
         "image": "frog.png"
+    },
+    {
+        "username": "Tubers93",
+        "note": "Cool avatar",
+        "image": "tubers.png"
+    },
+    {
+        "username": "222",
+        "note": ""Fear no man, trust no woman" — 222",
+        "image": "twotwo.png"
+    },
+    {
+        "username": "taxO",
+        "note": "Developer",
+        "image": "taxo.png"
+    },
+    {
+        "username": "sunlight",
+        "note": "Met in-game.",
+        "image": "sunlight.png"
+    },
+    {
+        "username": "mrbucketblade",
+        "note": "troller",
+        "image": "mrbucketblade.png"
+    },
+    {
+        "username": "Jane_doe",
+        "note": ""Till death do us part" — Jane_doe",
+        "image": "janedoe.png"
+    },
+    {
+        "username": "BLOT_cantCHAT",
+        "note": "Met in-game.",
+        "image": "blot.png"
     }
 ]
