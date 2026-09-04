@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Town's archive</title>
+    <style>
+        * {
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
+            -ms-interpolation-mode: nearest-neighbor;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #008080;
+            color: #000000;
+            font-family: "Times New Roman", Times, serif;
+            margin: 0;
+            padding: 15px;
+        }
+
+        .page-container {
+            background-color: #c0c0c0;
+            border: 3px inset #ffffff;
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 15px;
+        }
+
+        header {
+            background-color: #000080;
+            color: #ffffff;
+            padding: 10px;
+            text-align: center;
+            border: 2px outset #ffffff;
+        }
+
+        h1 {
+            font-family: "Courier New", Courier, monospace;
+            font-size: 24px;
+            margin: 0;
+        }
+
+        main {
+            padding: 15px 5px;
+        }
+
+        h2 {
+            font-size: 18px;
+            color: #000080;
+            margin-top: 0;
+        }
+
+        p {
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        hr {
+            border: 0;
+            border-top: 2px groove #ffffff;
+            margin: 15px 0;
+        }
+
+        .search-box {
+            background-color: #dfdfdf;
+            border: 2px inset #ffffff;
+            padding: 10px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .search-box label {
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .search-box input[type="text"] {
+            font-family: "Courier New", Courier, monospace;
+            font-size: 14px;
+            padding: 3px 5px;
+            border: 2px inset #ffffff;
+            background-color: #ffffff;
+            color: #000000;
+            outline: none;
+            flex-grow: 1;
+        }
+
+        .search-box button {
+            font-family: "Times New Roman", Times, serif;
+            font-size: 13px;
+            background-color: #c0c0c0;
+            border: 2px outset #ffffff;
+            padding: 3px 8px;
+            cursor: pointer;
+        }
+
+        .search-box button:active {
+            border-style: inset;
+        }
+
+        .pixel-img {
+            border: 2px inset #ffffff;
+            width: 100px;
+            height: 100px;
+            display: block;
+        }
+
+        ul.featured-list {
+            list-style-type: square;
+            padding-left: 20px;
+        }
+
+        ul.featured-list li {
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        a {
+            color: #0000ff;
+            text-decoration: underline;
+        }
+
+        a:visited {
+            color: #800080;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="page-container">
+        <header>
+            <h1>ROBLOX PEOPLE</h1>
+        </header>
+
+        <main>
+            <h2>Welcome.</h2>
+            <p>
+                If you're visiting this site, you've probably encountered me in game. I am <strong>Town</strong>. To see if you have been featured, check out the list below. If you have been featured, you can contact me to get your name removed.
+            </p>
+
+            <hr>
+
+            <div class="search-box">
+                <label for="user-search">Search:</label>
+                <input type="text" id="user-search" placeholder="Enter username..." onkeyup="filterUsers()">
+                <button type="button" onclick="filterUsers()">Find</button>
+            </div>
+
+            <h2>Featured People:</h2>
+            <ul class="featured-list" id="featured-list"></ul>
+
+            <hr>
+
+            <p>
+                To request removal, add or message me on Discord: <strong>@yngstep</strong>
+            </p>
+        </main>
+    </div>
+
+    <script>
+        let allUsers = [];
+
+        async function loadUsers() {
+            try {
+                const response = await fetch('users.json');
+                allUsers = await response.json();
+                renderUsers(allUsers);
+            } catch (error) {
+                document.getElementById('featured-list').innerHTML = '<li>Error loading archive data.</li>';
+            }
+        }
+
+        function renderUsers(users) {
+            const list = document.getElementById('featured-list');
+            list.innerHTML = '';
+            
+            if (users.length === 0) {
+                list.innerHTML = '<li>No matching users found.</li>';
+                return;
+            }
+
+            users.forEach(user => {
+                const li = document.createElement('li');
+                
+                const strong = document.createElement('strong');
+                strong.textContent = user.username;
+                
+                const noteText = document.createTextNode(` : ${user.note}`);
+                
+                const br1 = document.createElement('br');
+                const br2 = document.createElement('br');
+                
+                const img = document.createElement('img');
+                img.className = 'pixel-img';
+                img.src = user.image;
+                img.alt = user.username;
+
+                li.appendChild(strong);
+                li.appendChild(noteText);
+                li.appendChild(br1);
+                li.appendChild(br2);
+                li.appendChild(img);
+
+                list.appendChild(li);
+            });
+        }
+
+        function filterUsers() {
+            const query = document.getElementById('user-search').value.toLowerCase();
+            const filtered = allUsers.filter(user => 
+                user.username.toLowerCase().includes(query) || 
+                user.note.toLowerCase().includes(query)
+            );
+            renderUsers(filtered);
+        }
+
+        loadUsers();
+    </script>
+</body>
+</html>
