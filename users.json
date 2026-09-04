@@ -3,5 +3,10 @@
         "username": "Town",
         "note": "hey, that's me!",
         "image": "Town.png"
+    },
+    {
+        "username": "Bobby",
+        "note": "Met in-game.",
+        "image": "bobby.png"
     }
 ]
